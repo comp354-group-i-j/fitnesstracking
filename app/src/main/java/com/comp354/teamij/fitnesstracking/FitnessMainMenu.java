@@ -16,7 +16,7 @@ public class FitnessMainMenu extends AppCompatActivity {
         setTitle("FitnessTracking");
         // Get the Intent that started this activity and extract the string
         //Intent intent = getIntent();
-        // String message = intent.getStringExtra(iCycle.EXTRA_MESSAGE);
+        // String message = intent.getStringExtra(EXTRA_MESSAGE);
 
         //TextView loginMessage = findViewById(R.id.LoginMessage);
         //loginMessage.setText(message);
