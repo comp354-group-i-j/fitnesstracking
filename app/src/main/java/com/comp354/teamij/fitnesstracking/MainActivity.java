@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentViewChart);
     }
 
+//    public void viewFitness(View view) {
+//        Intent intentViewChart = new Intent(this, FitnessMainMenu.class);
+//        startActivity(intentViewChart);
+//    }
     public void viewFitness(View view) {
-        Intent intentViewChart = new Intent(this, FitnessMainMenu.class);
+        Intent intentViewChart = new Intent(this, PredictionActivity.class);
         startActivity(intentViewChart);
     }
 

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import com.comp354.teamij.fitnesstracking.utils.MovingAverage;
 import com.comp354.teamij.fitnesstracking.R;
 import com.comp354.teamij.fitnesstracking.utils.WorkoutDataFetcher;
 import com.jjoe64.graphview.GraphView;
@@ -84,8 +84,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
 
@@ -133,8 +133,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
 
@@ -182,8 +182,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
 
@@ -231,8 +231,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
                             if(workouts.get(i).getSpeedAvg() == null)
@@ -281,8 +281,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
                             if(workouts.get(i).getSpeedMax() == null)
@@ -331,8 +331,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
                             if(workouts.get(i).getSpeedAvg() == null)
@@ -381,8 +381,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
                             if(workouts.get(i).getSpeedMax() == null)
@@ -431,8 +431,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
                             if(workouts.get(i).getAltitudeMin() == null)
@@ -481,8 +481,8 @@ public class FitnessGraphsActivity extends AppCompatActivity {
                         int x = 0;
                         Double y = 0.0;
 
-                        SimpleMovingAverage obj = new SimpleMovingAverage(2);
-                        SimpleMovingAverage obj2 = new SimpleMovingAverage(3);
+                        MovingAverage obj = new MovingAverage(10);
+                        MovingAverage obj2 = new MovingAverage(20);
 
                         for(int i = 0; i < workouts.size(); i++){
                             if(workouts.get(i).getAltitudeMax() == null)
@@ -511,42 +511,5 @@ public class FitnessGraphsActivity extends AppCompatActivity {
     }
 
 
-    //https://www.geeksforgeeks.org/program-find-simple-moving-average/
-    public class SimpleMovingAverage {
 
-        // queue used to store list so that we get the average
-        private final Queue<Double> Dataset = new LinkedList<Double>();
-        private final int period;
-        private double sum;
-
-        // constructor to initialize period
-        public SimpleMovingAverage(int period)
-        {
-            this.period = period;
-        }
-
-        // function to add new data in the
-        // list and update the sum so that
-        // we get the new mean
-        public void addData(double num)
-        {
-            sum += num;
-            Dataset.add(num);
-
-            // Updating size so that length
-            // of data set should be equal
-            // to period as a normal mean has
-            if (Dataset.size() > period)
-            {
-                sum -= Dataset.remove();
-            }
-        }
-
-        // function to calculate mean
-        public double getMean()
-        {
-            return sum / period;
-        }
-
-    }
 }

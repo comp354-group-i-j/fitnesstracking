@@ -14,6 +14,7 @@ import com.comp354.teamij.fitnesstracking.utils.WorkoutDataFetcher;
 import com.moomeen.endo2java.model.Workout;
 
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class WorkoutsActivity extends AppCompatActivity {
 
@@ -84,7 +85,7 @@ public class WorkoutsActivity extends AppCompatActivity {
             view = getLayoutInflater().inflate(R.layout.listoption,null);
             TextView workoutDate = view.findViewById(R.id.workoutDate);
             TextView workoutDuration = view.findViewById(R.id.workoutDuration);
-            workoutDate.setText(workouts.get(i).getStartTime().toString().substring(0,10) + " " + workouts.get(i).getStartTime().toString().substring(11,19));
+            workoutDate.setText(workouts.get(i).getStartTime().toDate().toString()/*toString().substring(0,10) + " " + workouts.get(i).getStartTime().toString().substring(11,19)*/);
             workoutDuration.setText(workouts.get(i).getDuration().getStandardMinutes() + " minutes");
 
             return view;
