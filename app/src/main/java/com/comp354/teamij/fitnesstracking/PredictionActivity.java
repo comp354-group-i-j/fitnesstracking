@@ -398,7 +398,7 @@ public class PredictionActivity extends AppCompatActivity {
         switch (selection) {
             case 0:
                 if (metric < 0 )
-                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0));
+                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0.0));
                 else if (percentDiff > 0.15)
                     output.setText(String.format("Very unfavorable conditions. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
                 else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
@@ -435,7 +435,7 @@ public class PredictionActivity extends AppCompatActivity {
                 break;
             case 1:
                 if (metric < 0 )
-                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0));
+                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0.0));
                 else if (percentDiff > 0.15)
                     output.setText(String.format("Very unfavorable conditions. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
                 else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
@@ -471,7 +471,7 @@ public class PredictionActivity extends AppCompatActivity {
                 break;
             case 2:
                 if (metric < 0 )
-                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0));
+                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0.0));
                 else if (percentDiff > 0.15)
                     output.setText(String.format("Very unfavorable conditions. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
                 else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
