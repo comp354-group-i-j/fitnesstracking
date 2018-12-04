@@ -34,8 +34,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="8dp"
-        android:onClick="viewChart"
-        android:text="@string/button_ViewChart"
+        android:onClick="viewWeather"
+        android:text="@string/button_ViewWeather"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hottest_day_text" />

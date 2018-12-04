@@ -14,7 +14,7 @@
         completions."
     </string>
     <string name="title_activity_chart">ChartActivity</string>
-    <string name="button_ViewChart">View Chart</string>
+    <string name="button_ViewWeather">View Weather Data</string>
     <string name="text_statsTitle">Your Statistics</string>
     <string name="avrg_temp_txt">Average Temperature (°C)</string>
     <string name="avrg_windspeed_txt">Average Windspeed (km/h)</string>

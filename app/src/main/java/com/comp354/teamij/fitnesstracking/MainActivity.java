@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DecimalFormat formatter = new DecimalFormat("#0.0");
 
-    public void viewChart(View view) {
+    public void viewWeather(View view) {
         Intent intentViewChart = new Intent(this, WeatherChartsActivity.class);
         startActivity(intentViewChart);
     }

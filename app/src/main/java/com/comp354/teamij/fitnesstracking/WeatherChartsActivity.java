@@ -26,6 +26,8 @@ public class WeatherChartsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
+        setTitle("Weather Data");
+
         Intent intentViewChart = getIntent();
 
         final LineChart chart = (LineChart) findViewById(R.id.chart);
