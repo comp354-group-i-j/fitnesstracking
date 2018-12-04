@@ -100,27 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        int year = startYear;
-        int month = startMonth;
-        int monthCounter = startMonth;
-
-        Calendar calendar = Calendar.getInstance();
-        int currentYear  = calendar.get(Calendar.YEAR);
-        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-
-        // iterate through all months and populate weather list
-        while (year < currentYear || (year == currentYear && month <= currentMonth)) {
-            Log.d("main", String.format("year: %d, month: %d", year, month));
-
-            weatherDataFetcher.getWeatherData(year, month, listener, errorListener);
-
-            monthCounter += 1;
-            month = ((monthCounter - 1) % 12) + 1;
-            year = startYear + ((monthCounter - 1) / 12);
-        }
-
-
-
+        weatherDataFetcher.getWeatherData(2018, 1, listener, errorListener);
     }
 
 }

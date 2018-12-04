@@ -33,7 +33,7 @@ public class WeatherDataFetcher {
         String format = "csv"; // "csv" or "xml"
         int stationID = 51157; // MONTREAL INTL A Station ID
         int day = 1; // Not used and can be an arbitrary value
-        int timeframe = 1; // 1 for hourly, 2 for daily, 3 for monthly
+        int timeframe = 2; // 1 for hourly, 2 for daily, 3 for monthly
         String submit = "Download+Data";
 
         return String.format(Locale.US, "%s?format=%s&stationID=%d&Year=%d&Month=%d&Day=%d&timeframe=%d&submit=%s",

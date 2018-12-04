@@ -57,14 +57,19 @@ public class Parser {
         CsvRow row;
         while ((row = csvParser.nextRow()) != null) {
             Map<String, String> values = row.getFieldMap();
-            String temp = values.get("Temp (Â°C)");
-            // temp is null when weather for specific hour is not yet available
-            if (temp != null) {
+            String temp = values.get("Mean Temp (Â°C)");
+
+            // if wind speed is under 31 or missing, assume no wind that day
+            String windSpeed = values.get("Spd of Max Gust (km/h)");
+            if (windSpeed.equals("<31") || windSpeed.equals("")) {
+                windSpeed = "0";
+            }
+
+            // if temperature is empty, weather data is not available for that day
+            if (!temp.equals("")) {
                 WeatherResponse response = new WeatherResponse();
                 response.setDateTime(values.get("Date/Time"));
                 response.setTemperature(temp);
-
-                String windSpeed = values.get("Wind Spd (km/h)");
                 response.setWindSpeed(windSpeed);
 
                 items.add(response);
