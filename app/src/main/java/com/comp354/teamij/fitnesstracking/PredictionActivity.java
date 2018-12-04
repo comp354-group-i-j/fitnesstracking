@@ -147,9 +147,9 @@ public class PredictionActivity extends AppCompatActivity {
 
                         float[] durationCoeffs = LinearEquationSolver.calcCoefficients(historicalData, 0, weatherFitnessData);
 
-                        int testWind = 5;
-                        int testTemp = 23;
-                        int testRest = 1;
+                        float testWind = weatherFitnessData.get(weatherFitnessData.size() - 1).windSpeed;
+                        float testTemp = weatherFitnessData.get(weatherFitnessData.size() - 1).temperature;
+                        int testRest = Math.min(weatherFitnessData.get(weatherFitnessData.size() - 1).daysOff, 5);
 
                         float newDuration = durationCoeffs[0] * testWind + durationCoeffs[1] * testTemp + durationCoeffs[2] * testRest;
 
@@ -192,12 +192,12 @@ public class PredictionActivity extends AppCompatActivity {
 
                         float[] distanceCoeffs = LinearEquationSolver.calcCoefficients(historicalData, 1, weatherFitnessData);
 
-                        int testWind = 5;
-                        int testTemp = 23;
-                        int testRest = 1;
+                        float testWind = weatherFitnessData.get(weatherFitnessData.size() - 1).windSpeed;
+                        float testTemp = weatherFitnessData.get(weatherFitnessData.size() - 1).temperature;
+                        int testRest = Math.min(weatherFitnessData.get(weatherFitnessData.size() - 1).daysOff, 5);
 
                         float newDistance = distanceCoeffs[0] * testWind + distanceCoeffs[1] * testTemp + distanceCoeffs[2] * testRest;
-                        predictWorkout(newDistance, durationBest, 1, predictionView);
+                        predictWorkout(newDistance, distanceBest, 1, predictionView);
 
 
                     }
@@ -238,12 +238,12 @@ public class PredictionActivity extends AppCompatActivity {
 
                         float[] speedCoeffs = LinearEquationSolver.calcCoefficients(historicalData, 2, weatherFitnessData);
 
-                        int testWind = 5;
-                        int testTemp = 23;
-                        int testRest = 1;
+                        float testWind = weatherFitnessData.get(weatherFitnessData.size() - 1).windSpeed;
+                        float testTemp = weatherFitnessData.get(weatherFitnessData.size() - 1).temperature;
+                        int testRest = Math.min(weatherFitnessData.get(weatherFitnessData.size() - 1).daysOff, 5);
 
                         float newSpeed = speedCoeffs[0] * testWind + speedCoeffs[1] * testTemp + speedCoeffs[2] * testRest;
-                        predictWorkout(newSpeed, durationBest, 2, predictionView);
+                        predictWorkout(newSpeed, speedBest, 2, predictionView);
                     }
                 }
         );
@@ -397,113 +397,114 @@ public class PredictionActivity extends AppCompatActivity {
 
         switch (selection) {
             case 0:
-                if (metric < 0 )
-                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0.0));
-                else if (percentDiff > 0.15)
-                    output.setText(String.format("Very unfavorable conditions. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
-                else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Neutral conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
 
-                    else
-                        output.setText(String.format("Neutral conditions. Downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (2.0/8 - percentDiff ) * 100));
-                } else if (percentDiff < 0.10 && percentDiff >= 0.05) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Favorable conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (4.0/8 - percentDiff ) * 100));
+    if (percentDiff > 0.15)
+        output.setText(String.format("Very unfavorable conditions. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
+    else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
+        if (weatherFitnessData.get(
+                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+            output.setText(String.format("Neutral conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
 
-                    else
-                        output.setText(String.format("Favorable conditions, but downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
+        else
+            output.setText(String.format("Neutral conditions. Downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (2.0/8 - percentDiff ) * 100));
+    } else if (percentDiff < 0.10 && percentDiff >= 0.05) {
+        if (weatherFitnessData.get(
+                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+            output.setText(String.format("Favorable conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (4.0/8 - percentDiff ) * 100));
 
-                } else if (percentDiff < 0.05 && percentDiff >= 0.0) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Very favorable conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (6.0/8 - percentDiff ) * 100));
+        else
+            output.setText(String.format("Favorable conditions, but downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
 
-                    else
-                        output.setText(String.format("Very favorable conditions, but downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (5.0/8 - percentDiff ) * 100));
+    } else if (percentDiff < 0.05 && percentDiff >= 0.0) {
+        if (weatherFitnessData.get(
+                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+            output.setText(String.format("Very favorable conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (6.0/8 - percentDiff ) * 100));
 
-                } else if (metric - best > 0) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Perfect conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (8.0/8 - percentDiff ) * 100));
-                    else
-                        output.setText(String.format("Perfect conditions, but downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (7.0/8 - percentDiff ) * 100));
+        else
+            output.setText(String.format("Very favorable conditions, but downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (5.0/8 - percentDiff ) * 100));
 
-                }
+    } else if (metric - best > 0) {
+        if (weatherFitnessData.get(
+                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+            output.setText(String.format("Perfect conditions. Upward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (8.0/8 - percentDiff ) * 100));
+        else
+            output.setText(String.format("Perfect conditions, but downward trend. Projected duration is %.0f minutes, %.2f%% chance to get new best", metric, (7.0/8 - percentDiff ) * 100));
+
+    }
+
+
                 break;
             case 1:
-                if (metric < 0 )
-                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0.0));
-                else if (percentDiff > 0.15)
-                    output.setText(String.format("Very unfavorable conditions. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
-                else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Neutral conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
 
-                    else
-                        output.setText(String.format("Neutral conditions. Downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (2.0/8 - percentDiff ) * 100));
-                } else if (percentDiff < 0.10 && percentDiff >= 0.05) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Favorable conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (4.0/8 - percentDiff ) * 100));
+                    if (percentDiff > 0.15)
+                        output.setText(String.format("Very unfavorable conditions. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (1.0 / 8 - percentDiff) * 100));
+                    else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Neutral conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (3.0 / 8 - percentDiff) * 100));
 
-                    else
-                        output.setText(String.format("Favorable conditions, but downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
+                        else
+                            output.setText(String.format("Neutral conditions. Downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (2.0 / 8 - percentDiff) * 100));
+                    } else if (percentDiff < 0.10 && percentDiff >= 0.05) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Favorable conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (4.0 / 8 - percentDiff) * 100));
 
-                } else if (percentDiff < 0.05 && percentDiff >= 0.0) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Very favorable conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (6.0/8 - percentDiff ) * 100));
+                        else
+                            output.setText(String.format("Favorable conditions, but downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (3.0 / 8 - percentDiff) * 100));
 
-                    else
-                        output.setText(String.format("Very favorable conditions, but downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (5.0/8 - percentDiff ) * 100));
+                    } else if (percentDiff < 0.05 && percentDiff >= 0.0) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Very favorable conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (6.0 / 8 - percentDiff) * 100));
 
-                } else if (metric - best > 0) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Perfect conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (8.0/8 - percentDiff ) * 100));
-                    else
-                        output.setText(String.format("Perfect conditions, but downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (7.0/8 - percentDiff ) * 100));
-                }
+                        else
+                            output.setText(String.format("Very favorable conditions, but downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (5.0 / 8 - percentDiff) * 100));
+
+                    } else if (metric - best > 0) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Perfect conditions. Upward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (8.0 / 8 - percentDiff) * 100));
+                        else
+                            output.setText(String.format("Perfect conditions, but downward trend. Projected distance is %.0f km, %.2f%% chance to get new best", metric, (7.0 / 8 - percentDiff) * 100));
+                    }
+
                 break;
             case 2:
-                if (metric < 0 )
-                    output.setText(String.format("Extremely unfavorable conditions. %.2f%% chance to get new best", 0.0));
-                else if (percentDiff > 0.15)
-                    output.setText(String.format("Very unfavorable conditions. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (1.0/8 - percentDiff ) * 100));
-                else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Neutral conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
 
-                    else
-                        output.setText(String.format("Neutral conditions. Downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (2.0/8 - percentDiff ) * 100));
-                } else if (percentDiff < 0.10 && percentDiff >= 0.05) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Favorable conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (4.0/8 - percentDiff ) * 100));
+                    if (percentDiff > 0.15)
+                        output.setText(String.format("Very unfavorable conditions. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (1.0 / 8 - percentDiff) * 100));
+                    else if (percentDiff <= 0.15 && percentDiff >= 0.10) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Neutral conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (3.0 / 8 - percentDiff) * 100));
 
-                    else
-                        output.setText(String.format("Favorable conditions, but downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (3.0/8 - percentDiff ) * 100));
+                        else
+                            output.setText(String.format("Neutral conditions. Downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (2.0 / 8 - percentDiff) * 100));
+                    } else if (percentDiff < 0.10 && percentDiff >= 0.05) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Favorable conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (4.0 / 8 - percentDiff) * 100));
 
-                } else if (percentDiff < 0.05 && percentDiff >= 0.0) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Very favorable conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (6.0/8 - percentDiff ) * 100));
+                        else
+                            output.setText(String.format("Favorable conditions, but downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (3.0 / 8 - percentDiff) * 100));
 
-                    else
-                        output.setText(String.format("Very favorable conditions, but downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (5.0/8 - percentDiff ) * 100));
+                    } else if (percentDiff < 0.05 && percentDiff >= 0.0) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Very favorable conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (6.0 / 8 - percentDiff) * 100));
 
-                } else if (metric - best > 0) {
-                    if (weatherFitnessData.get(
-                            weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
-                        output.setText(String.format("Perfect conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (8.0/8 - percentDiff ) * 100));
-                    else
-                        output.setText(String.format("Perfect conditions, but downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (7.0/8 - percentDiff ) * 100));
-                }
+                        else
+                            output.setText(String.format("Very favorable conditions, but downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (5.0 / 8 - percentDiff) * 100));
+
+                    } else if (metric - best > 0) {
+                        if (weatherFitnessData.get(
+                                weatherFitnessData.size() - 1).durationMA10 > weatherFitnessData.get(weatherFitnessData.size() - 1).durationMA20)
+                            output.setText(String.format("Perfect conditions. Upward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (8.0 / 8 - percentDiff) * 100));
+                        else
+                            output.setText(String.format("Perfect conditions, but downward trend. Projected speed is %.0f km/h, %.2f%% chance to get new best", metric, (7.0 / 8 - percentDiff) * 100));
+                    }
+
                 break;
         }
 
