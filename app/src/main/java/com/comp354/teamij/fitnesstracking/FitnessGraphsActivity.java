@@ -47,7 +47,7 @@ public class FitnessGraphsActivity extends AppCompatActivity {
         max = findViewById(R.id.max);
 
         final GraphView graph = (GraphView) findViewById(R.id.Graph);
-        graph.getGridLabelRenderer().setNumHorizontalLabels(workouts.size());
+        graph.getGridLabelRenderer().setNumHorizontalLabels(4);
 
         Button distance = findViewById(R.id.Distance);
         Button duration = findViewById(R.id.Duration);
