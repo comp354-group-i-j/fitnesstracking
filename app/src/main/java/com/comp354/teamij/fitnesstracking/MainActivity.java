@@ -36,16 +36,20 @@ public class MainActivity extends AppCompatActivity {
     public static final List<WeatherResponse> weatherResponseList = new LinkedList<>();
 
     private DecimalFormat formatter = new DecimalFormat("#0.0");
-
+    
+    //go to weather chart
     public void viewWeather(View view) {
         Intent intentViewChart = new Intent(this, WeatherChartsActivity.class);
         startActivity(intentViewChart);
     }
-
+    
+    //go to fitness menu with list and charts 
     public void viewFitness(View view) {
         Intent intentViewChart = new Intent(this, FitnessMainMenu.class);
         startActivity(intentViewChart);
     }
+    
+    //go to prediction chart
     public void viewPrediction(View view) {
         Intent intentViewChart = new Intent(this, PredictionActivity.class);
         startActivity(intentViewChart);
