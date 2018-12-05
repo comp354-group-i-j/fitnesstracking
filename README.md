@@ -28,7 +28,9 @@ A live demo can be found here (5:52): https://youtu.be/rrMi6l6N2rk
 ## Built With:
 
 [FastCSV](https://github.com/osiegmar/FastCSV)
+
 [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+
 [Volley](https://github.com/google/volley)
 
 ## License:
