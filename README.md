@@ -18,3 +18,8 @@ A live demo can be found here (5:52): https://youtu.be/rrMi6l6N2rk
 
 - username: `comp354_2018@yahoo.com`
 - password: `Concordia`
+
+### Credits:
+  Omar Al-Farajat, Alexandria Alcancia-Shaw, Francis Bergin,
+  Maxim Sinelnikov, Starly Solon, Yanran Zhao, Justin Weller, 
+  Youssef Boujbel, He Liu, Nicolas Prud’Homme
