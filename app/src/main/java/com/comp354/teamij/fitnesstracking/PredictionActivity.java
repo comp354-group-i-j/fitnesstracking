@@ -15,6 +15,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.LegendRenderer;
 import com.moomeen.endo2java.model.Workout;
 import com.comp354.teamij.fitnesstracking.entities.WeatherResponse;
 
@@ -62,6 +63,7 @@ public class PredictionActivity extends AppCompatActivity {
         Button speedButton = findViewById(R.id.SpeedButton);
 
         Date day0 = workouts.get(workouts.size() - 1).getStartTime().toDate();     // First day
+        Date dayHalfway = workouts.get(workouts.size()/2).getStartTime().toDate();
         Date dayN = workouts.get(0).getStartTime().toDate();     // Last day
         mergeFitnessWeatherData(day0, dayN);
 
@@ -74,10 +76,12 @@ public class PredictionActivity extends AppCompatActivity {
 
         // set manual x bounds to have nice steps
         graph.getViewport().setMinX(day0.getTime());
-        graph.getViewport().setMaxX(dayN.getTime());
+        graph.getViewport().setMaxX(dayHalfway.getTime());
         graph.getViewport().setXAxisBoundsManual(true);
-
-
+       // graph.getViewport().setYAxisBoundsManual(true);
+        // enable scaling and scrolling
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScalableY(true);
 
 
 
@@ -99,8 +103,8 @@ public class PredictionActivity extends AppCompatActivity {
 
 
 
-
-
+        TextView predictionView = findViewById(R.id.PredictionView);
+        predictionView.setText("☺ Please select Duration, Distance, or Speed for a prediction! You can scale or scroll through the graphs!☺");
 
 
 
@@ -108,7 +112,8 @@ public class PredictionActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         generateGraph(0);
-                        //view
+                        TextView predictionView = findViewById(R.id.PredictionView);
+                        predictionView.setText("☺ Please select Duration, Distance, or Speed for a prediction! You can scale or scroll through the graphs!☺");
                     }
                 }
         );
@@ -560,6 +565,18 @@ public class PredictionActivity extends AppCompatActivity {
                 daysOff.appendData(new DataPoint(weatherFitnessData.get(i).date,
                         weatherFitnessData.get(i).daysOff), true, weatherFitnessData.size());
             }
+
+            duration.setTitle("Duration");
+            distance.setTitle("Distance");
+            avgSpeed.setTitle("Speed");
+            temperature.setTitle("Temp");
+            windSpeed.setTitle("Wind");
+            daysOff.setTitle("Days Off");
+
+            graph.getLegendRenderer().setVisible(true);
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+
             graph.addSeries(duration);
             graph.addSeries(distance);
             graph.addSeries(avgSpeed);
@@ -583,6 +600,17 @@ public class PredictionActivity extends AppCompatActivity {
                 MA20.appendData(new DataPoint(weatherFitnessData.get(i).date,
                         weatherFitnessData.get(i).durationMA20), true, weatherFitnessData.size());
             }
+            duration.setTitle("Duration");
+            temperature.setTitle("Temp");
+            windSpeed.setTitle("Wind");
+            daysOff.setTitle("Days Off");
+            MA10.setTitle("MA10");
+            MA20.setTitle("MA20");
+
+            graph.getLegendRenderer().setVisible(true);
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+//            graph.getViewport().setMaxY(160.0);
+//            graph.getViewport().setMinY(-25.0);
             graph.addSeries(duration);
             graph.addSeries(temperature);
             graph.addSeries(windSpeed);
@@ -606,6 +634,14 @@ public class PredictionActivity extends AppCompatActivity {
                 MA20.appendData(new DataPoint(weatherFitnessData.get(i).date,
                         weatherFitnessData.get(i).distanceMA20), true, weatherFitnessData.size());
             }
+//            graph.getViewport().setMaxY(125.0);
+//            graph.getViewport().setMinY(-25.0);
+            distance.setTitle("Distance");
+            temperature.setTitle("Temp");
+            windSpeed.setTitle("Wind");
+            daysOff.setTitle("Days Off");
+            MA10.setTitle("MA10");
+            MA20.setTitle("MA20");
             graph.addSeries(distance);
             graph.addSeries(temperature);
             graph.addSeries(windSpeed);
@@ -629,6 +665,15 @@ public class PredictionActivity extends AppCompatActivity {
                 MA20.appendData(new DataPoint(weatherFitnessData.get(i).date,
                         weatherFitnessData.get(i).speedMA20), true, weatherFitnessData.size());
             }
+//            graph.getViewport().setMaxY(35.0);
+//            graph.getViewport().setMinY(-25.0);
+            avgSpeed.setTitle("Speed");
+            temperature.setTitle("Temp");
+            windSpeed.setTitle("Wind");
+            daysOff.setTitle("Days Off");
+            MA10.setTitle("MA10");
+            MA20.setTitle("MA20");
+
             graph.addSeries(avgSpeed);
             graph.addSeries(temperature);
             graph.addSeries(windSpeed);
