@@ -25,7 +25,7 @@ A live demo can be found here (5:52): https://youtu.be/rrMi6l6N2rk
 - username: `comp354_2018@yahoo.com`
 - password: `Concordia`
 
-## Built With:
+## Built With
 
 [FastCSV](https://github.com/osiegmar/FastCSV)
 
@@ -33,10 +33,10 @@ A live demo can be found here (5:52): https://youtu.be/rrMi6l6N2rk
 
 [Volley](https://github.com/google/volley)
 
-## License:
+## License
 This project is licensed under the MIT License.
 
-### Authors
+## Authors
   Omar Al-Farajat, Alexandria Alcancia-Shaw, Francis Bergin,
   Maxim Sinelnikov, Starly Solon, Yanran Zhao, Justin Weller, 
   Youssef Boujbel, He Liu, Nicolas Prud’Homme
