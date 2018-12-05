@@ -21,7 +21,7 @@ public class FitnessMainMenu extends AppCompatActivity {
         //TextView loginMessage = findViewById(R.id.LoginMessage);
         //loginMessage.setText(message);
 
-        //
+        // Button in the sub-menu of fitness data to display workouts data activity page
         Button viewWorkouts = findViewById(R.id.viewWorkouts);
 
         viewWorkouts.setOnClickListener(
@@ -33,7 +33,7 @@ public class FitnessMainMenu extends AppCompatActivity {
 
                     }
                 });
-
+        // button to display the graphs activity page
         Button viewGraphs = findViewById(R.id.viewGraphs);
 
         viewGraphs.setOnClickListener(
@@ -44,12 +44,12 @@ public class FitnessMainMenu extends AppCompatActivity {
                     }
                 });
     }
-
+    // listener of the buton to direct to workout activity page
     public void goToViewWorkouts(View view) {
         Intent intent = new Intent(this, WorkoutsActivity.class);
         startActivity(intent);
     }
-
+    // listener to direct button to fitness graphs ativity
     public void goToViewGraphs(View view) {
         Intent intent = new Intent(this, FitnessGraphsActivity.class);
         startActivity(intent);

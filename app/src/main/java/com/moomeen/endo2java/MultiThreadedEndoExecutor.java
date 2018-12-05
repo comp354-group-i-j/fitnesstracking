@@ -28,6 +28,7 @@ public class MultiThreadedEndoExecutor {
 		this.session = session;
 	}
 
+	//getWorkouts
 	public List<Workout> getWorkouts(int workoutsPerThread) throws InvocationException {
 		List<Workout> workoutsHeaders = getWorkoutsHeaders();
 		Map<Future<List<Workout>>, Callable<List<Workout>>> tasks = new HashMap<Future<List<Workout>>, Callable<List<Workout>>>();
@@ -43,6 +44,7 @@ public class MultiThreadedEndoExecutor {
 		return extractResults(tasks);
 	}
 
+	//extractResults
 	private List<Workout> extractResults(Map<Future<List<Workout>>, Callable<List<Workout>>> tasks) {
 		int maxRetries = 2;
 		int sleepBetweenRetries = 100;

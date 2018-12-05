@@ -46,27 +46,27 @@ public class MathUtils {
      */
     public static HashMap<WeatherKeys, Double> getSummaryValues (List<WeatherResponse> data){
         HashMap<WeatherKeys, Double> averageMap = new HashMap<>(4);
-        double[] average = new double[4];
+        double[] summaryValues = new double[4];
 
         if(data != null && data.size() > 0){
             //get the first value for the lowest temperature
-            average[3] = data.get(0).getTemperature();
+            summaryValues[3] = data.get(0).getTemperature();
             for(WeatherResponse response : data){
-                average[0] += response.getTemperature();
-                average[1] += response.getWindSpeed();
-                if(average[2] < response.getTemperature())
-                    average[2] = response.getTemperature();
-                if(average[3] > response.getTemperature())
-                    average[3] = response.getTemperature();
+                summaryValues[0] += response.getTemperature();
+                summaryValues[1] += response.getWindSpeed();
+                if(summaryValues[2] < response.getTemperature())
+                    summaryValues[2] = response.getTemperature();
+                if(summaryValues[3] > response.getTemperature())
+                    summaryValues[3] = response.getTemperature();
             }
             //Compute average temperature and windspeed
-            average[0] = average[0] / (double) data.size();
-            average[1] = average[1] / (double) data.size();
+            summaryValues[0] = summaryValues[0] / (double) data.size();
+            summaryValues[1] = summaryValues[1] / (double) data.size();
         }
-        averageMap.put(WeatherKeys.AVERAGETEMP, average[0]);
-        averageMap.put(WeatherKeys.AVERAGEWIND, average[1]);
-        averageMap.put(WeatherKeys.HOTDAY, average[2]);
-        averageMap.put(WeatherKeys.COLDDAY, average[3]);
+        averageMap.put(WeatherKeys.AVERAGETEMP, summaryValues[0]);
+        averageMap.put(WeatherKeys.AVERAGEWIND, summaryValues[1]);
+        averageMap.put(WeatherKeys.HOTDAY, summaryValues[2]);
+        averageMap.put(WeatherKeys.COLDDAY, summaryValues[3]);
 
         return averageMap;
     }
