@@ -11,6 +11,9 @@ To build and run the project, simply import the project directory as an existing
 ### Option 2: Install directly on Android device using APK file
 Transfer the file "fitnessTracking.apk" onto your device. Access the file through your device's file directory. You may be prompted during installation to enable "install unkown apps" or similar. Alternatively, you may have to enable developer mode on your device. 
 
+## Demo
+A live demo can be found here (5:52): https://youtu.be/rrMi6l6N2rk
+
 ## Credentials
 
 - username: `comp354_2018@yahoo.com`
