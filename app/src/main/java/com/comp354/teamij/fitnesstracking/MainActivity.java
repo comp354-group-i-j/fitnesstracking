@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentViewChart);
     }
 
+    public void logout(View view) {
+        Intent intentViewChart = new Intent(this, LoginActivity.class);
+        startActivity(intentViewChart);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

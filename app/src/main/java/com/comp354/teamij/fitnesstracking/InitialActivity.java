@@ -12,8 +12,6 @@ import com.comp354.teamij.fitnesstracking.utils.UserUtils;
  */
 public class InitialActivity extends AppCompatActivity {
 
-    private UserUtils userUtils;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +21,11 @@ public class InitialActivity extends AppCompatActivity {
 
         // Check if login is required before showing MainActivity
         if (UserUtils.loginRemembered()) {
-            activityIntent = new Intent(getApplicationContext(), MainActivity.class);
+            if (UserUtils.login()) {
+                activityIntent = new Intent(getApplicationContext(), MainActivity.class);
+            } else {
+                activityIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            }
         } else {
             activityIntent = new Intent(getApplicationContext(), LoginActivity.class);
         }

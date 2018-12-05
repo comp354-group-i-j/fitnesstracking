@@ -24,8 +24,8 @@ public class UserUtils {
 
     private static UserUtils instance = null;
     private static final String AuthRememberKey = "authenticationRemember";
-    private static final String DEFAULT_USERNAME = "user";
-    private static final String DEFAULT_PASSWORD = "password";
+    private static final String UsernameKey = "username";
+    private static final String PasswordKey = "password";
 
     private static SharedPreferences sharedPreferences = null;
 
@@ -47,8 +47,7 @@ public class UserUtils {
      * @return
      */
     public static boolean loginRemembered() {
-        return false;
-        //return sharedPreferences.getBoolean(UserUtils.AuthRememberKey, false);
+        return sharedPreferences.getBoolean(UserUtils.AuthRememberKey, false);
     }
 
     /**
@@ -62,6 +61,11 @@ public class UserUtils {
         int loginResult = -1;
         try {
             loginResult = new LoginTask().execute().get();
+            if (rememberLogin) {
+                sharedPreferences.edit().putBoolean(AuthRememberKey, true).apply();
+                sharedPreferences.edit().putString(UsernameKey, username).apply();
+                sharedPreferences.edit().putString(PasswordKey, password).apply();
+            }
         } catch (ExecutionException | InterruptedException e) {
             Log.e("UserUtils","Unhandled exception", e);
             session = null;
@@ -71,6 +75,30 @@ public class UserUtils {
          }
         }
         return loginResult == 0; // Zero means a successful login
+    }
+
+    /**
+     * Login with saved credentials
+     * @return
+     */
+    public static boolean login() {
+        boolean remember = sharedPreferences.getBoolean(UserUtils.AuthRememberKey, false);
+        String username = sharedPreferences.getString(UserUtils.UsernameKey, "");
+        String password = sharedPreferences.getString(UserUtils.PasswordKey, "");
+
+        if (!remember ||
+                (username.compareToIgnoreCase("") == 0 || password.compareToIgnoreCase("") == 0)) {
+            return false;
+        } else {
+            return login(username, password, false);
+        }
+    }
+
+    public static void clearCredentials() {
+        sharedPreferences.edit().putBoolean(AuthRememberKey, false).apply();
+        sharedPreferences.edit().putString(UsernameKey, "").apply();
+        sharedPreferences.edit().putString(PasswordKey, "").apply();
+        session = null;
     }
 
     public static EndomondoSession getSession() { return session; }
